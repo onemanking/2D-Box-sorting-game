@@ -114,19 +114,37 @@ public class NPCBased : MonoBehaviour
 
     private void HandleWanderState()
     {
-        var colliders = Physics2D.OverlapCircleAll(m_detectionCollider.transform.position, m_detectionCollider.radius);
-        foreach (var box in colliders.Select(x => x.GetComponent<Box>())
-                                     .Where(x => x != null && x.IsOnGround())
-                                     .OrderBy(x => Vector2.Distance(transform.position, x.transform.position)))
+        if (foundedBox == null)
         {
-            foundedBox = box;
+            var targetBox = FindNearestBox();
+            if (targetBox == null)
+            {
+                if (movementCoroutine == null) StartPatrolMovement();
+                else Debug.Log("Already patrolling, waiting for next box.");
+            }
+            else
+            {
+                foundedBox = targetBox;
+                ChangeState(State.Found);
+            }
+        }
+        else
+        {
             ChangeState(State.Found);
-            return;
         }
 
-        if (movementCoroutine == null)
+        Box FindNearestBox()
         {
-            StartPatrolMovement();
+            var colliders = Physics2D.OverlapCircleAll(m_detectionCollider.transform.position, m_detectionCollider.radius);
+            foreach (var box in colliders.Select(x => x.GetComponent<Box>())
+                                         .Where(x => x != null && x.IsOnGround())
+                                         .OrderBy(x => Vector2.Distance(transform.position, x.transform.position)))
+            {
+                ChangeState(State.Found);
+                return box;
+            }
+
+            return null;
         }
     }
 
