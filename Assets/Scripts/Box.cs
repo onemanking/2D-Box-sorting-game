@@ -1,18 +1,48 @@
 using UnityEngine;
 
-[RequireComponent(typeof(SpriteRenderer), typeof(BoxCollider2D), typeof(Rigidbody2D))]
+[RequireComponent(typeof(SpriteRenderer), typeof(Collider2D), typeof(Rigidbody2D))]
 public class Box : MonoBehaviour
 {
-    [SerializeField] private BoxData m_boxData;
+    [field: SerializeField] internal BoxData BoxData { get; private set; }
+
+    internal Collider2D Collider2D { get; private set; }
+
+    private Rigidbody2D rigid2D;
+    private SpriteRenderer renderer;
 
     void Start()
     {
-        var renderer = GetComponent<SpriteRenderer>();
-        renderer.color = m_boxData.Color;
+        renderer = GetComponent<SpriteRenderer>();
+        renderer.color = BoxData.Color;
+
+        Collider2D = GetComponent<Collider2D>();
+        rigid2D = GetComponent<Rigidbody2D>();
     }
 
-    void Update()
+    internal void SetHolding()
     {
+        Collider2D = Collider2D != null ? Collider2D : GetComponent<Collider2D>();
+        Collider2D.enabled = false;
 
+        rigid2D = rigid2D != null ? rigid2D : GetComponent<Rigidbody2D>();
+        rigid2D.simulated = false;
+
+        renderer.sortingOrder = 10;
+    }
+
+    internal bool IsOnGround()
+    {
+        if (rigid2D == null)
+            rigid2D = GetComponent<Rigidbody2D>();
+
+        return rigid2D.linearVelocityY == 0;
+    }
+
+    internal void SetSorted()
+    {
+        Collider2D.enabled = true;
+        transform.localPosition = Vector3.zero;
+
+        renderer.sortingOrder = 0;
     }
 }
