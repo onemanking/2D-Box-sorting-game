@@ -15,6 +15,7 @@ MonoBehaviour:
   BoxPrefabs:
   - {fileID: 7630658386152821310, guid: 1ece4ce4c3ef22f4da41cd14ffead42c, type: 3}
   - {fileID: 7630658386152821310, guid: 5147a4ba9371db940b9a85d7a458895d, type: 3}
-  BoxSpawnInterval: 2
-  BoxSpawnAreaMin: {x: -10, y: 5}
-  BoxSpawnAreaMax: {x: 10, y: 5}
+  BoxSpawnIntervalMin: 2
+  BoxSpawnIntervalMax: 3
+  BoxSpawnAreaMin: {x: -7, y: 5}
+  BoxSpawnAreaMax: {x: 7, y: 5}

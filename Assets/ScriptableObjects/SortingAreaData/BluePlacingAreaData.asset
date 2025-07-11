@@ -9,8 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d2a02f6ddd3d4c84cb65485b8f2d7545, type: 3}
-  m_Name: BlueBoxData
+  m_Script: {fileID: 11500000, guid: 0a4a5599354081a45b323ac2afba2096, type: 3}
+  m_Name: BluePlacingAreaData
   m_EditorClassIdentifier: 
-  BoxType: 1
-  Color: {r: 0, g: 0, b: 1, a: 1}
+  AcceptedBoxes:
+  - {fileID: 11400000, guid: 03a9e08b4381db24ca92c29a949ffeda, type: 2}
