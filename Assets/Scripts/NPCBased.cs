@@ -15,19 +15,14 @@ public enum State
 [RequireComponent(typeof(Collider2D), typeof(Rigidbody2D))]
 public class NPCBased : MonoBehaviour
 {
-    [Header("Idle Settings")]
-    [SerializeField] private float m_idleTimeMin = 1f;
-    [SerializeField] private float m_idleTimeMax = 3f;
+    public IdleState IdleState { get; private set; }
+    public WanderState WanderState { get; private set; }
+    public FoundState FoundState { get; private set; }
+    public CollectState CollectState { get; private set; }
+    public SortingState SortingState { get; private set; }
 
-    [Header("Wander Settings")]
-    [SerializeField] private float m_wanderSpeed = 2f;
-
-    [Header("Found Settings")]
-    [SerializeField] private float m_foundSpeed = 3f;
-
-    [Header("Sorting Settings")]
-    [SerializeField] private float m_sortingSpeed = 5f;
-
+    [Header("State Configuration")]
+    [field: SerializeField] internal NPCBaseStateConfigData StateConfig { get; private set; }
     [Header("References")]
     [SerializeField] private CircleCollider2D m_detectionCollider;
     [SerializeField] private Transform m_handTransform;
@@ -38,8 +33,8 @@ public class NPCBased : MonoBehaviour
     private State m_state = State.Idle;
     private State m_previousState;
 
-    private Box currentBox;
-    private Box foundedBox;
+    internal Box CurrentBox;
+    internal Box FoundedBox;
     private Rigidbody2D rigid2D;
     private Coroutine movementCoroutine;
     private Coroutine idleCoroutine;
@@ -70,6 +65,16 @@ public class NPCBased : MonoBehaviour
                 HandleSortingState();
                 break;
         }
+
+        HandleUpdateState();
+    }
+
+    private void HandleUpdateState()
+    {
+        if (CurrentState != null && inStateTransition)
+        {
+            CurrentState.Update();
+        }
     }
 
     private void ChangeState(State newState)
@@ -96,7 +101,7 @@ public class NPCBased : MonoBehaviour
 
     private void HandleIdleState()
     {
-        if (foundedBox == null && currentBox == null)
+        if (FoundedBox == null && CurrentBox == null)
         {
             if (idleCoroutine == null)
             {
@@ -107,7 +112,7 @@ public class NPCBased : MonoBehaviour
 
     private IEnumerator WaitToPatrol()
     {
-        float waitTime = UnityEngine.Random.Range(m_idleTimeMin, m_idleTimeMax);
+        float waitTime = UnityEngine.Random.Range(StateConfig.IdleTimeMin, StateConfig.IdleTimeMax);
         yield return new WaitForSeconds(waitTime);
         ChangeState(State.Wander);
     }
@@ -119,7 +124,7 @@ public class NPCBased : MonoBehaviour
                                      .Where(x => x != null && x.IsOnGround())
                                      .OrderBy(x => Vector2.Distance(transform.position, x.transform.position)))
         {
-            foundedBox = box;
+            FoundedBox = box;
             ChangeState(State.Found);
             return;
         }
@@ -132,7 +137,7 @@ public class NPCBased : MonoBehaviour
 
     private void HandleFoundState()
     {
-        if (foundedBox == null)
+        if (FoundedBox == null)
         {
             ChangeState(State.Wander);
             return;
@@ -140,8 +145,8 @@ public class NPCBased : MonoBehaviour
 
         if (movementCoroutine == null)
         {
-            Debug.Log($"Found a box: {foundedBox.name}");
-            movementCoroutine = StartCoroutine(GoToTarget(foundedBox.transform.position, m_foundSpeed, OnReachedBox));
+            Debug.Log($"Found a box: {FoundedBox.name}");
+            movementCoroutine = StartCoroutine(GoToTarget(FoundedBox.transform.position, StateConfig.FoundSpeed, OnReachedBox));
         }
 
         void OnReachedBox()
@@ -153,7 +158,7 @@ public class NPCBased : MonoBehaviour
 
     private void HandleCollectState()
     {
-        InteractWithBox(foundedBox);
+        InteractWithBox(FoundedBox);
     }
 
     private void HandleSortingState()
@@ -163,23 +168,23 @@ public class NPCBased : MonoBehaviour
             return;
         }
 
-        Debug.Log($"Sorting the box {currentBox.name}");
+        Debug.Log($"Sorting the box {CurrentBox.name}");
 
-        var sortingArea = m_sortingAreaArray.FirstOrDefault(area => area.IsBoxAccepted(currentBox));
+        var sortingArea = m_sortingAreaArray.FirstOrDefault(area => area.IsBoxAccepted(CurrentBox));
         if (sortingArea == null)
         {
-            Debug.LogWarning($"No sorting area found for box {currentBox.name}");
+            Debug.LogWarning($"No sorting area found for box {CurrentBox.name}");
             ChangeState(State.Idle);
         }
         else
         {
-            movementCoroutine = StartCoroutine(GoToTarget(sortingArea.transform.position, m_sortingSpeed, () => OnReachedSortingArea(sortingArea)));
+            movementCoroutine = StartCoroutine(GoToTarget(sortingArea.transform.position, StateConfig.SortingSpeed, () => OnReachedSortingArea(sortingArea)));
         }
 
         void OnReachedSortingArea(SortingArea sortingArea)
         {
-            sortingArea.DepositBox(currentBox);
-            currentBox = null;
+            sortingArea.DepositBox(CurrentBox);
+            CurrentBox = null;
             ChangeState(State.Idle);
         }
     }
@@ -195,7 +200,7 @@ public class NPCBased : MonoBehaviour
 
         Debug.Log($"Patrolling to position: {randomPosition}");
 
-        movementCoroutine = StartCoroutine(GoToTarget(randomPosition, m_wanderSpeed, OnReachedPatrolPoint));
+        movementCoroutine = StartCoroutine(GoToTarget(randomPosition, StateConfig.WanderSpeed, OnReachedPatrolPoint));
 
         Vector3 ClampToSortingArea(Vector3 position)
         {
@@ -215,18 +220,18 @@ public class NPCBased : MonoBehaviour
 
     private void InteractWithBox(Box detectedBox)
     {
-        currentBox = detectedBox;
-        currentBox.transform.SetParent(transform);
-        currentBox.SetHolding();
-        currentBox.transform.position = m_handTransform.position;
-        currentBox.transform.localRotation = Quaternion.identity;
+        CurrentBox = detectedBox;
+        CurrentBox.transform.SetParent(transform);
+        CurrentBox.SetHolding();
+        CurrentBox.transform.position = m_handTransform.position;
+        CurrentBox.transform.localRotation = Quaternion.identity;
 
         ChangeState(State.Sorting);
 
-        this.foundedBox = null;
+        this.FoundedBox = null;
     }
 
-    private IEnumerator GoToTarget(Vector2 position, float speed, Action onReached = null)
+    internal IEnumerator GoToTarget(Vector2 position, float speed, Action onReached = null)
     {
         Debug.DrawLine(transform.position, position, Color.white, 2f);
 
@@ -247,5 +252,30 @@ public class NPCBased : MonoBehaviour
             scale.x = Mathf.Abs(scale.x) * (faceRight ? 1 : -1);
             transform.localScale = scale;
         }
+    }
+
+    internal IState CurrentState { get; private set; }
+    internal IState PreviousState { get; private set; }
+
+    internal void SetFoundedBox(Box box) => FoundedBox = box;
+
+    internal void SetCurrentBox(Box box) => CurrentBox = box;
+
+    private bool inStateTransition = false;
+    internal void ChangeState(IState state)
+    {
+        if (CurrentState == state || inStateTransition) return;
+
+        inStateTransition = true;
+
+        CurrentState?.Exit();
+
+        PreviousState = CurrentState;
+
+        CurrentState = state;
+
+        CurrentState?.Enter();
+
+        Debug.Log($"State changed from {PreviousState} to {CurrentState}");
     }
 }
