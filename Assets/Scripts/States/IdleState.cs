@@ -3,16 +3,18 @@ using UnityEngine;
 public class IdleState : IState
 {
     private readonly NPCBased npc;
-    private float idleTimeMin;
-    private float idleTimeMax;
+    private readonly StateMachine stateMachine;
+    private readonly float idleTimeMin;
+    private readonly float idleTimeMax;
     private float idleTimer;
     private float idleWaitTime;
 
-    public IdleState(NPCBased npc, float idleTimeMin, float idleTimeMax)
+    public IdleState(NPCBased npc, StateMachine stateMachine)
     {
         this.npc = npc;
-        this.idleTimeMin = idleTimeMin;
-        this.idleTimeMax = idleTimeMax;
+        this.stateMachine = stateMachine;
+        idleTimeMin = npc.StateConfig.IdleTimeMin;
+        idleTimeMax = npc.StateConfig.IdleTimeMax;
     }
 
     void IState.Enter()
@@ -33,7 +35,7 @@ public class IdleState : IState
 
         if (idleTimer >= idleWaitTime)
         {
-            npc.ChangeState(npc.WanderState);
+            stateMachine.ChangeState(npc.WanderState);
         }
     }
 }
