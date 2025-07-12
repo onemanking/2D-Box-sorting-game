@@ -25,9 +25,9 @@ public class BoxManager : MonoBehaviour
 
     private void SpawnBox()
     {
-        var boxPrefab = m_boxSpawnConfigData.GetRandomBoxPrefab();
+        var boxData = m_boxSpawnConfigData.GetRandomBoxData();
         var spawnPosition = m_boxSpawnConfigData.GetRandomSpawnPosition();
-
-        _ = Instantiate(boxPrefab, spawnPosition, Quaternion.identity);
+        var box = Instantiate(boxData.BoxPrefab, spawnPosition, Quaternion.identity);
+        box.Setup(boxData);
     }
 }

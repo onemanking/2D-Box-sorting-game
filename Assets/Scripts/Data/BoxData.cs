@@ -6,6 +6,7 @@ public class BoxData : ScriptableObject
 {
     public BoxType BoxType;
     public Color Color;
+    public Box BoxPrefab;
 }
 
 public enum BoxType

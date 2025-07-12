@@ -1,22 +1,24 @@
+using System;
 using UnityEngine;
 
 [RequireComponent(typeof(SpriteRenderer), typeof(Collider2D), typeof(Rigidbody2D))]
 public class Box : MonoBehaviour
 {
-    [field: SerializeField] internal BoxData BoxData { get; private set; }
+    internal BoxData BoxData { get; private set; }
 
     internal Collider2D Collider2D { get; private set; }
 
     private Rigidbody2D rigid2D;
     private SpriteRenderer renderer;
 
-    void Start()
+    internal void Setup(BoxData boxData)
     {
-        renderer = GetComponent<SpriteRenderer>();
-        renderer.color = BoxData.Color;
+        renderer ??= GetComponent<SpriteRenderer>();
+        Collider2D ??= GetComponent<Collider2D>();
+        rigid2D ??= GetComponent<Rigidbody2D>();
 
-        Collider2D = GetComponent<Collider2D>();
-        rigid2D = GetComponent<Rigidbody2D>();
+        BoxData = boxData;
+        renderer.color = boxData.Color;
     }
 
     internal void SetHolding(Transform handTransform)

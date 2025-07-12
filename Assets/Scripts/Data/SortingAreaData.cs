@@ -3,7 +3,7 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "SortingAreaData", menuName = "Scriptable Objects/SortingAreaData")]
 public class SortingAreaData : ScriptableObject
 {
-    public BoxData[] AcceptedBoxes; // Array of accepted box data
+    public BoxData[] AcceptedBoxes;
 
     internal bool IsBoxAccepted(Box box)
     {
