@@ -19,7 +19,7 @@ public class Box : MonoBehaviour
         rigid2D = GetComponent<Rigidbody2D>();
     }
 
-    internal void SetHolding()
+    internal void SetHolding(Transform handTransform)
     {
         Collider2D = Collider2D != null ? Collider2D : GetComponent<Collider2D>();
         Collider2D.enabled = false;
@@ -28,6 +28,10 @@ public class Box : MonoBehaviour
         rigid2D.simulated = false;
 
         renderer.sortingOrder = 10;
+
+        transform.SetParent(handTransform);
+        transform.position = handTransform.position;
+        transform.localRotation = Quaternion.identity;
     }
 
     internal bool IsOnGround()
