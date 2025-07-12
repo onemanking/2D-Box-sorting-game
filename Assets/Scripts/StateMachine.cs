@@ -32,18 +32,12 @@ public class StateMachine
 
     internal void Update()
     {
-        if (CurrentState != null)
-        {
-            CurrentState.Update();
-        }
+        CurrentState?.Update();
     }
 
     internal void FixedUpdate()
     {
-        if (CurrentState != null)
-        {
-            CurrentState.FixedUpdate();
-        }
+        CurrentState?.FixedUpdate();
     }
 }
 
