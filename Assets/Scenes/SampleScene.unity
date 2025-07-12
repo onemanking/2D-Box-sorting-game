@@ -152,13 +152,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 96049ffb78ca8e843a5cf1ba010f5bd5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_idleTimeMin: 1
-  m_idleTimeMax: 2
-  m_wanderSpeed: 2
-  m_foundSpeed: 3
-  m_sortingSpeed: 5
-  m_detectionCollider: {fileID: 945723457}
-  m_handTransform: {fileID: 1790522412}
+  <StateConfig>k__BackingField: {fileID: 11400000, guid: b4e725c3a7c32af44a326ca367f367d2, type: 2}
+  <DetectionCollider>k__BackingField: {fileID: 945723457}
+  <HandTransform>k__BackingField: {fileID: 1790522412}
   m_sortingAreaArray:
   - {fileID: 1445650968}
   - {fileID: 1456009444}
