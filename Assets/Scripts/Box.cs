@@ -48,5 +48,6 @@ public class Box : MonoBehaviour
         transform.localPosition = Vector3.zero;
 
         renderer.sortingOrder = 0;
+        renderer.color = new Color(BoxData.Color.r * 0.5f, BoxData.Color.g * 0.5f, BoxData.Color.b * 0.5f, BoxData.Color.a);
     }
 }
