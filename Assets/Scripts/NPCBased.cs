@@ -71,6 +71,8 @@ public class NPCBased : MonoBehaviour
     {
         Debug.DrawLine(transform.position, position, Color.white, 2f);
 
+        PlayAnimation("Walk");
+
         var isMovingRight = position.x > transform.position.x;
         FlipSprite(isMovingRight);
 
@@ -84,9 +86,8 @@ public class NPCBased : MonoBehaviour
 
         void FlipSprite(bool faceRight)
         {
-            var scale = transform.localScale;
-            scale.x = Mathf.Abs(scale.x) * (faceRight ? 1 : -1);
-            transform.localScale = scale;
+            float targetYRotation = faceRight ? 0f : 180f;
+            transform.rotation = Quaternion.Euler(0f, targetYRotation, 0f);
         }
     }
 
