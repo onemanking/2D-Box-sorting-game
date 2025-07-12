@@ -77,7 +77,10 @@ public class SortingState : IState
     private void OnReachedSortingArea(SortingArea sortingArea)
     {
         sortingArea.DepositBox(npc.CurrentBox);
-        npc.SetCurrentBox(null);
-        stateMachine.ChangeState(npc.IdleState);
+        npc.PlayAnimation("Deposit", () =>
+        {
+            npc.SetCurrentBox(null);
+            stateMachine.ChangeState(npc.IdleState);
+        });
     }
 }

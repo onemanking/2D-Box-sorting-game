@@ -56,11 +56,15 @@ public class CollectState : IState
         var collectBox = npc.FoundedBox;
         var handTransform = npc.HandTransform;
 
-        npc.SetCurrentBox(collectBox);
-        npc.CurrentBox.SetHolding(handTransform);
+        npc.PlayAnimation(this, () =>
+        {
+            npc.SetCurrentBox(collectBox);
+            npc.CurrentBox.SetHolding(handTransform);
 
-        stateMachine.ChangeState(npc.SortingState);
+            stateMachine.ChangeState(npc.SortingState);
 
-        npc.SetFoundedBox(null);
+            npc.SetFoundedBox(null);
+            Debug.Log($"Collected box: {collectBox.name}");
+        });
     }
 }

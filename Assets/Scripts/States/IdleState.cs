@@ -22,6 +22,7 @@ public class IdleState : IState
         idleWaitTime = Random.Range(idleTimeMin, idleTimeMax);
         idleTimer = 0f;
         Debug.Log($"Entering Idle State. Waiting for {idleWaitTime} seconds before transitioning to Search State.");
+        npc.PlayAnimation(this);
     }
 
     void IState.Exit()

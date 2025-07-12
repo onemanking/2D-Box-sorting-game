@@ -24,8 +24,11 @@ public class FoundState : IState
         else
         {
             Debug.Log($"Found Box: {npc.FoundedBox.name}");
-            var targetPosition = npc.FoundedBox.transform.position;
-            npc.StartMovementCoroutine(targetPosition, foundSpeed, OnReachedBox);
+            npc.PlayAnimation(this, () =>
+            {
+                var targetPosition = npc.FoundedBox.transform.position;
+                npc.StartMovementCoroutine(targetPosition, foundSpeed, OnReachedBox);
+            });
         }
     }
 
