@@ -1,6 +1,6 @@
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "NPCStateConfig", menuName = "Game/NPC State Configuration")]
+[CreateAssetMenu(fileName = "NPCBaseStateConfigData", menuName = "Scriptable Objects/NPCBaseStateConfigData")]
 public class NPCBaseStateConfigData : ScriptableObject
 {
     [Header("Idle Settings")]
