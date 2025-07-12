@@ -6,11 +6,6 @@ using UnityEngine;
 [RequireComponent(typeof(Collider2D), typeof(Rigidbody2D))]
 public class NPCBased : MonoBehaviour
 {
-    public IdleState IdleState { get; private set; }
-    public WanderState WanderState { get; private set; }
-    public FoundState FoundState { get; private set; }
-    public CollectState CollectState { get; private set; }
-    public SortingState SortingState { get; private set; }
 
     [Header("State Configuration")]
     [field: SerializeField] internal NPCBaseStateConfigData StateConfig { get; private set; }
@@ -22,13 +17,19 @@ public class NPCBased : MonoBehaviour
     [Header("Sorting Areas")]
     [SerializeField] private SortingArea[] m_sortingAreaArray;
 
-    private StateMachine stateMachine;
+    internal IdleState IdleState { get; private set; }
+    internal WanderState WanderState { get; private set; }
+    internal FoundState FoundState { get; private set; }
+    internal CollectState CollectState { get; private set; }
+    internal SortingState SortingState { get; private set; }
 
     internal Box CurrentBox { get; private set; }
     internal Box FoundedBox { get; private set; }
+    internal bool IsMoving => movementCoroutine != null;
+
+    private StateMachine stateMachine;
     private Rigidbody2D rigid2D;
     private Coroutine movementCoroutine;
-    internal bool IsMoving => movementCoroutine != null;
 
     void Start()
     {
