@@ -13,6 +13,7 @@ public class SortingState : IState
         this.npc = npc;
         this.stateMachine = stateMachine;
         this.sortingAreaArray = sortingAreaArray;
+        sortingSpeed = npc.StateConfig.SortingSpeed;
     }
 
     void IState.Enter()

@@ -5,18 +5,19 @@ public class StateMachine
     internal IState CurrentState { get; private set; }
     internal IState PreviousState { get; private set; }
 
-    internal bool InStateTransition { get; private set; }
-
-
-    public StateMachine()
+    internal void Init(IState state)
     {
+        CurrentState = state;
+        PreviousState = null;
+
+        CurrentState.Enter();
+
+        Debug.Log($"State Machine initialized with state: {CurrentState}");
     }
 
     internal void ChangeState(IState state)
     {
-        if (CurrentState == state || InStateTransition) return;
-
-        InStateTransition = true;
+        if (CurrentState == state) return;
 
         CurrentState?.Exit();
 
@@ -31,7 +32,7 @@ public class StateMachine
 
     internal void Update()
     {
-        if (InStateTransition && CurrentState != null)
+        if (CurrentState != null)
         {
             CurrentState.Update();
         }
@@ -39,7 +40,7 @@ public class StateMachine
 
     internal void FixedUpdate()
     {
-        if (InStateTransition && CurrentState != null)
+        if (CurrentState != null)
         {
             CurrentState.FixedUpdate();
         }

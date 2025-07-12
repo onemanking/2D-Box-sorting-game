@@ -35,32 +35,12 @@ public class WanderState : IState
 
     void IState.Update()
     {
-        // if (npc.FoundedBox == null)
-        // {
-        //     var targetBox = FindNearestBox();
-        //     if (!targetBox)
-        //     {
-        //         StartPatrolMovement();
-        //     }
-        //     else
-        //     {
-        //         npc.SetFoundedBox(targetBox);
-        //         stateMachine.ChangeState(npc.FoundState);
-        //     }
-        // }
-        // else
-        // {
-        //     stateMachine.ChangeState(npc.FoundState);
-        // }
-
-        // Only check for boxes while wandering, not when standing still
         if (!npc.IsMoving)
         {
             stateMachine.ChangeState(npc.IdleState);
             return;
         }
 
-        // Check for boxes during movement
         var targetBox = FindNearestBox();
         Debug.Log($"Found box: {targetBox?.name ?? "None"}");
         if (targetBox != null)
@@ -69,20 +49,6 @@ public class WanderState : IState
             stateMachine.ChangeState(npc.FoundState);
         }
     }
-
-    // private Box FindNearestBox()
-    // {
-    //     var colliders = Physics2D.OverlapCircleAll(detectionCollider.transform.position, detectionCollider.radius);
-    //     foreach (var box in colliders.Select(x => x.GetComponent<Box>())
-    //                                  .Where(x => x != null && x.IsOnGround())
-    //                                  .OrderBy(x => Vector2.Distance(npc.transform.position, x.transform.position)))
-    //     {
-    //         stateMachine.ChangeState(npc.FoundState);
-    //         return box;
-    //     }
-
-    //     return null;
-    // }
 
     private Box FindNearestBox()
     {
@@ -97,19 +63,6 @@ public class WanderState : IState
 
     private void StartPatrolMovement()
     {
-        // var randomPosition = GenerateRandomPatrolPosition();
-
-        // randomPosition = ClampToLimitArea(randomPosition);
-
-        // Debug.Log($"Patrolling to position: {randomPosition}");
-
-        // npc.StartMovementCoroutine(randomPosition, wanderSpeed, OnReachedPatrolPoint);
-
-        // Vector3 ClampToLimitArea(Vector3 position)
-        // {
-        //     return new Vector3(Mathf.Clamp(position.x, wanderXMinLimit, wanderXMaxLimit), position.y, position.z);
-        // }
-
         if (npc.IsMoving) return;
 
         var randomPosition = GenerateRandomPatrolPosition();

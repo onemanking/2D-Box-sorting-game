@@ -27,6 +27,7 @@ public class IdleState : IState
     void IState.Exit()
     {
         idleTimer = 0f;
+        Debug.Log("Exiting Idle State");
     }
 
     void IState.Update()
