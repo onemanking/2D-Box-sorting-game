@@ -24,6 +24,7 @@ public class NPCBased : MonoBehaviour
 
     internal Box CurrentBox { get; private set; }
     internal Box FoundedBox { get; private set; }
+    internal AnimationController AnimationController { get; private set; }
     internal bool IsMoving => movementCoroutine != null;
 
     private StateMachine stateMachine;
@@ -33,6 +34,7 @@ public class NPCBased : MonoBehaviour
     void Start()
     {
         rigid2D = GetComponent<Rigidbody2D>();
+        AnimationController = GetComponent<AnimationController>();
 
         stateMachine = new StateMachine();
 
@@ -106,5 +108,19 @@ public class NPCBased : MonoBehaviour
             StopCoroutine(movementCoroutine);
             movementCoroutine = null;
         }
+    }
+
+    internal void PlayAnimation(string animationName, Action callback = null)
+    {
+        AnimationController ??= GetComponent<AnimationController>();
+
+        AnimationController.PlayAnimation(animationName, callback);
+    }
+
+    internal void PlayAnimation(IState state, Action callback = null)
+    {
+        AnimationController ??= GetComponent<AnimationController>();
+
+        AnimationController.PlayAnimation(state, callback);
     }
 }
