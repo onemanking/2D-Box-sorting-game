@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8345b07df9a19644da30d93ea6f00be6, type: 3}
   m_Name: BoxSpawnConfigData
   m_EditorClassIdentifier: 
-  BoxPrefabs:
-  - {fileID: 7630658386152821310, guid: 1ece4ce4c3ef22f4da41cd14ffead42c, type: 3}
-  - {fileID: 7630658386152821310, guid: 5147a4ba9371db940b9a85d7a458895d, type: 3}
+  BoxDataArray:
+  - {fileID: 11400000, guid: 03a9e08b4381db24ca92c29a949ffeda, type: 2}
+  - {fileID: 11400000, guid: 14bfb1842217ba94f86dc8d1b3d0b064, type: 2}
   BoxSpawnIntervalMin: 2
   BoxSpawnIntervalMax: 3
   BoxSpawnAreaMin: {x: -7, y: 5}

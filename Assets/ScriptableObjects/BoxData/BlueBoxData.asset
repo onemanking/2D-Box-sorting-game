@@ -14,3 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   BoxType: 1
   Color: {r: 0, g: 0, b: 1, a: 1}
+  BoxPrefab: {fileID: 7630658386152821310, guid: 96b7e33f08160244e95462ceaeb89303, type: 3}

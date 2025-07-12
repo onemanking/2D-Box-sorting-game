@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 4251869375125655249}
   - component: {fileID: 1501201260549460663}
   m_Layer: 6
-  m_Name: BlueBox
+  m_Name: BoxPrefab
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -102,7 +102,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dfc2e24a2bda54b40b75aa3eb07d67f6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <BoxData>k__BackingField: {fileID: 11400000, guid: 03a9e08b4381db24ca92c29a949ffeda, type: 2}
+  <BoxData>k__BackingField: {fileID: 11400000, guid: 6e79c284a93b37c4e8453f4d167e5475, type: 2}
 --- !u!61 &4251869375125655249
 BoxCollider2D:
   m_ObjectHideFlags: 0

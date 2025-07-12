@@ -12,5 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d2a02f6ddd3d4c84cb65485b8f2d7545, type: 3}
   m_Name: RedBoxData
   m_EditorClassIdentifier: 
-  BoxColor: 0
+  BoxType: 0
   Color: {r: 1, g: 0, b: 0, a: 1}
+  BoxPrefab: {fileID: 7630658386152821310, guid: 96b7e33f08160244e95462ceaeb89303, type: 3}
