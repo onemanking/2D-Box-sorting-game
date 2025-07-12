@@ -21,7 +21,7 @@ public class IdleState : IState
     {
         idleWaitTime = Random.Range(idleTimeMin, idleTimeMax);
         idleTimer = 0f;
-        Debug.Log($"Entering Idle State. Waiting for {idleWaitTime} seconds before transitioning to Wander State.");
+        Debug.Log($"Entering Idle State. Waiting for {idleWaitTime} seconds before transitioning to Search State.");
     }
 
     void IState.Exit()
@@ -36,7 +36,7 @@ public class IdleState : IState
 
         if (idleTimer >= idleWaitTime)
         {
-            stateMachine.ChangeState(npc.WanderState);
+            stateMachine.ChangeState(npc.SearchState);
         }
     }
 }

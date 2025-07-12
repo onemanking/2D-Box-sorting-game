@@ -19,7 +19,7 @@ public class FoundState : IState
 
         if (npc.FoundedBox == null)
         {
-            stateMachine.ChangeState(npc.WanderState);
+            stateMachine.ChangeState(npc.SearchState);
         }
         else
         {
@@ -38,7 +38,7 @@ public class FoundState : IState
     {
         if (npc.FoundedBox == null)
         {
-            stateMachine.ChangeState(npc.WanderState);
+            stateMachine.ChangeState(npc.SearchState);
         }
     }
 

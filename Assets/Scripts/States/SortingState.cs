@@ -21,7 +21,7 @@ public class SortingState : IState
         Debug.Log("Entering Sorting State");
         if (!ValidateSorting())
         {
-            stateMachine.ChangeState(npc.WanderState);
+            stateMachine.ChangeState(npc.SearchState);
             return;
         }
 

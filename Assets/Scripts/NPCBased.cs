@@ -6,7 +6,6 @@ using UnityEngine;
 [RequireComponent(typeof(Collider2D), typeof(Rigidbody2D))]
 public class NPCBased : MonoBehaviour
 {
-
     [Header("State Configuration")]
     [field: SerializeField] internal NPCBaseStateConfigData StateConfig { get; private set; }
 
@@ -18,7 +17,7 @@ public class NPCBased : MonoBehaviour
     [SerializeField] private SortingArea[] m_sortingAreaArray;
 
     internal IdleState IdleState { get; private set; }
-    internal WanderState WanderState { get; private set; }
+    internal SearchState SearchState { get; private set; }
     internal FoundState FoundState { get; private set; }
     internal CollectState CollectState { get; private set; }
     internal SortingState SortingState { get; private set; }
@@ -42,9 +41,9 @@ public class NPCBased : MonoBehaviour
         InitSortingAreas();
 
         var offset = Mathf.Abs(transform.localScale.x);
-        var wanderXMinLimit = m_sortingAreaArray.Min(area => area.transform.position.x) + offset;
-        var wanderXMaxLimit = m_sortingAreaArray.Max(area => area.transform.position.x) - offset;
-        WanderState = new WanderState(this, stateMachine, wanderXMinLimit, wanderXMaxLimit);
+        var searchXMinLimit = m_sortingAreaArray.Min(area => area.transform.position.x) + offset;
+        var searchXMaxLimit = m_sortingAreaArray.Max(area => area.transform.position.x) - offset;
+        SearchState = new SearchState(this, stateMachine, searchXMinLimit, searchXMaxLimit);
 
         FoundState = new FoundState(this, stateMachine);
         CollectState = new CollectState(this, stateMachine);

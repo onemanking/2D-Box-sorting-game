@@ -8,7 +8,7 @@ public class NPCBaseStateConfigData : ScriptableObject
     public float IdleTimeMax = 3f;
 
     [Header("Movement Settings")]
-    public float WanderSpeed = 2f;
+    public float SearchSpeed = 2f;
     public float FoundSpeed = 3f;
     public float SortingSpeed = 5f;
 }

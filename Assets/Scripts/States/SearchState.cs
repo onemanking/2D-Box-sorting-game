@@ -1,35 +1,35 @@
 using System.Linq;
 using UnityEngine;
 
-public class WanderState : IState
+public class SearchState : IState
 {
     private readonly NPCBased npc;
     private readonly StateMachine stateMachine;
     private readonly CircleCollider2D detectionCollider;
-    private readonly float wanderSpeed;
-    private readonly float wanderXMinLimit;
-    private readonly float wanderXMaxLimit;
+    private readonly float searchSpeed;
+    private readonly float searchXMinLimit;
+    private readonly float searchXMaxLimit;
 
-    public WanderState(NPCBased npc, StateMachine stateMachine, float wanderXMinLimit, float wanderXMaxLimit)
+    public SearchState(NPCBased npc, StateMachine stateMachine, float searchXMinLimit, float searchXMaxLimit)
     {
         this.npc = npc;
         this.stateMachine = stateMachine;
-        this.wanderXMinLimit = wanderXMinLimit;
-        this.wanderXMaxLimit = wanderXMaxLimit;
+        this.searchXMinLimit = searchXMinLimit;
+        this.searchXMaxLimit = searchXMaxLimit;
         detectionCollider = npc.DetectionCollider;
-        wanderSpeed = npc.StateConfig.WanderSpeed;
+        searchSpeed = npc.StateConfig.SearchSpeed;
     }
 
     void IState.Enter()
     {
-        Debug.Log("Entering Wander State");
+        Debug.Log("Entering Search State");
         npc.StopMovementCoroutine();
         StartPatrolMovement();
     }
 
     void IState.Exit()
     {
-        Debug.Log("Exiting Wander State");
+        Debug.Log("Exiting Search State");
         npc.StopMovementCoroutine();
     }
 
@@ -68,7 +68,7 @@ public class WanderState : IState
         var randomPosition = GenerateRandomPatrolPosition();
 
         Debug.Log($"Patrolling to position: {randomPosition}");
-        npc.StartMovementCoroutine(randomPosition, wanderSpeed, OnReachedPatrolPoint);
+        npc.StartMovementCoroutine(randomPosition, searchSpeed, OnReachedPatrolPoint);
     }
 
     private Vector3 GenerateRandomPatrolPosition()
@@ -80,7 +80,7 @@ public class WanderState : IState
 
         var targetPosition = npc.transform.position + randomOffset;
 
-        targetPosition.x = Mathf.Clamp(targetPosition.x, wanderXMinLimit, wanderXMaxLimit);
+        targetPosition.x = Mathf.Clamp(targetPosition.x, searchXMinLimit, searchXMaxLimit);
 
         return targetPosition;
     }

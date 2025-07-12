@@ -18,7 +18,7 @@ public class CollectState : IState
 
         if (!ValidateCollection())
         {
-            stateMachine.ChangeState(npc.WanderState);
+            stateMachine.ChangeState(npc.SearchState);
             return;
         }
 
