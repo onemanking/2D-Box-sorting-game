@@ -1,8 +1,4 @@
-# Big Frogg Box Sorting
-
-This is a simple Unity game where you watch a frog character automatically sort different types of boxes into the correct areas.
-
-## What it does
+# 2D Box Sorting
 
 The NPC will moving around the scene looking for boxes that fall from above. When it finds one, it will pick it up and carries it to the matching sorting area based on box type. Red type boxes go to red areas, blue type boxes go to blue areas.
 
