@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: NPCBaseStateConfigData
   m_EditorClassIdentifier: 
   IdleTimeMin: 1
-  IdleTimeMax: 3
+  IdleTimeMax: 2
   WanderSpeed: 2
   FoundSpeed: 3
   SortingSpeed: 5
