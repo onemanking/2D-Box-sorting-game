@@ -26,6 +26,8 @@ public class SortingArea : MonoBehaviour
 
     private void StackBox(Box box)
     {
+        box.transform.localScale = Vector3.one;
+
         if (sortedBoxes.Count > 1)
         {
             var previousBox = sortedBoxes[sortedBoxes.Count - 2];
@@ -43,12 +45,5 @@ public class SortingArea : MonoBehaviour
     internal bool IsBoxAccepted(Box box)
     {
         return m_sortingAreaData.IsBoxAccepted(box);
-    }
-
-    private Collider2D collider2D;
-    internal Bounds GetBounds()
-    {
-        collider2D ??= GetComponent<Collider2D>();
-        return collider2D.bounds;
     }
 }
